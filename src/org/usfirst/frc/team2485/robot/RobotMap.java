@@ -1,6 +1,13 @@
 package org.usfirst.frc.team2485.robot;
 
+import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.robot.subsystems.Shooter;
+
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 /**
@@ -29,6 +36,24 @@ public class RobotMap {
 	public static SpeedControllerWrapper rightDriveWrapper;
 	public static SpeedControllerWrapper leftDriveWrapper;
 	
+	public static DriveTrain driveTrain;
+	
+	public static Solenoid upperSolenoid;
+	public static Solenoid lowerSolenoid;
+	
+	public static Encoder shooterEncoder;
+	
+	public static CANTalon leftShooterCANTalon;
+	public static CANTalon rightShooterCANTalon;
+	
+	public static SpeedControllerWrapper shooterWrapper;
+	
+	public static Shooter shooter;
+	
+	public static VictorSP intakeVictorSP, lateralVictorSP;
+	
+	public static IntakeRollers intakeRoller;
+	
 	public static void init() {
 		// TODO Auto-generated method stub
 		rightDriveVictorSPs = new VictorSP[] {new VictorSP(5), new VictorSP(6), new VictorSP(7)};
@@ -39,6 +64,28 @@ public class RobotMap {
 		
 		rightDriveEncoder = new Encoder(4, 5);
 		leftDriveEncoder = new Encoder(2, 3);
-
+		
+		driveTrain = new DriveTrain();
+		
+		Solenoid upperSolenoid = new Solenoid(5);
+		Solenoid lowerSolenoid = new Solenoid(4);
+		
+		shooterEncoder = new Encoder(6, 7);
+		
+		leftShooterCANTalon = new CANTalon(2);
+		rightShooterCANTalon = new CANTalon(3);
+		
+		shooterWrapper = new SpeedControllerWrapper(new CANTalon [] {leftShooterCANTalon, rightShooterCANTalon});
+		
+		shooter = new Shooter();
+		
+		intakeVictorSP = new VictorSP(8);
+		
+		lateralVictorSP = new VictorSP(9);
+		
+		intakeRoller = new IntakeRollers();
+		
 	}
+	
+	
 }

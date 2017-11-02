@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.commands.DriveWithControllers;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,7 +17,7 @@ public class DriveTrain extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new DriveWithControllers());
 	}
 	
 	public static void setLeftRight(double leftPWM, double rightPWM) {
