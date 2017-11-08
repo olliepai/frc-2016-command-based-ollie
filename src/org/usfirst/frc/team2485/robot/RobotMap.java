@@ -1,11 +1,14 @@
 package org.usfirst.frc.team2485.robot;
 
 import org.usfirst.frc.team2485.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2485.robot.subsystems.IntakeArm;
 import org.usfirst.frc.team2485.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team2485.robot.subsystems.InvertedAbsoluteEncoder;
 import org.usfirst.frc.team2485.robot.subsystems.Shooter;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -43,8 +46,7 @@ public class RobotMap {
 	
 	public static Encoder shooterEncoder;
 	
-	public static CANTalon leftShooterCANTalon;
-	public static CANTalon rightShooterCANTalon;
+	public static VictorSP shooterVictorSP;
 	
 	public static SpeedControllerWrapper shooterWrapper;
 	
@@ -52,7 +54,15 @@ public class RobotMap {
 	
 	public static VictorSP intakeVictorSP, lateralVictorSP;
 	
-	public static IntakeRollers intakeRoller;
+	public static IntakeRollers intakeRollers;
+	
+	public static InvertedAbsoluteEncoder absEncoder;
+	
+	public static VictorSP armVictorSP;
+	
+	public static SpeedControllerWrapper armWrapper;
+	
+	public static IntakeArm intakeArm;
 	
 	public static void init() {
 		// TODO Auto-generated method stub
@@ -72,10 +82,9 @@ public class RobotMap {
 		
 		shooterEncoder = new Encoder(6, 7);
 		
-		leftShooterCANTalon = new CANTalon(2);
-		rightShooterCANTalon = new CANTalon(3);
+		shooterVictorSP = new VictorSP(0);
 		
-		shooterWrapper = new SpeedControllerWrapper(new CANTalon [] {leftShooterCANTalon, rightShooterCANTalon});
+		shooterWrapper = new SpeedControllerWrapper(shooterVictorSP);
 		
 		shooter = new Shooter();
 		
@@ -83,7 +92,20 @@ public class RobotMap {
 		
 		lateralVictorSP = new VictorSP(9);
 		
-		intakeRoller = new IntakeRollers();
+		lateralVictorSP.setInverted(true);
+		
+		intakeVictorSP.setInverted(false);
+
+		intakeRollers = new IntakeRollers();
+		
+		absEncoder = new InvertedAbsoluteEncoder(new AnalogPotentiometer(0));
+		
+		armVictorSP = new VictorSP(1);
+		
+		armWrapper = new SpeedControllerWrapper(armVictorSP);
+		
+		intakeArm = new IntakeArm();
+
 		
 	}
 	

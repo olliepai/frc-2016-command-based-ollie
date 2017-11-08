@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2485.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2485.robot.commands.SetShooter;
+import org.usfirst.frc.team2485.robot.commands.StartRollers;
+import org.usfirst.frc.team2485.robot.commands.StopRollers;
 import org.usfirst.frc.team2485.robot.commands.StopShooter;
 
 /**
@@ -59,6 +61,9 @@ public class OI {
 		
 		new JoystickButton(driver, XBOX_BTN_A).whenPressed(new SetShooter(0.5));
 		new JoystickButton(driver, XBOX_BTN_B).whenPressed(new StopShooter());
+		
+		new JoystickButton(driver, XBOX_BTN_X).whenPressed(new StartRollers(0.3, 0.3));
+		new JoystickButton(driver, XBOX_BTN_Y).whenPressed(new StopRollers());
 		
 	}
 }
