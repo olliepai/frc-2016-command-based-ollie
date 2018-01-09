@@ -1,7 +1,9 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
 
+import org.usfirst.frc.team2485.robot.ConstantsIO;
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.WarlordsPIDController;
 import org.usfirst.frc.team2485.robot.commands.IntakeArmWithControllers;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,12 +21,29 @@ public class IntakeArm extends Subsystem {
 	
 	public static final double INTAKE_THRESHOLD = 0.1;
 	
+	public WarlordsPIDController armPID = new WarlordsPIDController();
+	
 	public IntakeArm() {
+		armPID.setSources(RobotMap.absEncoder);
+		armPID.setOutputs(RobotMap.intakeVictorSP);
+		armPID.setPID(ConstantsIO.kP_IntakeArm, ConstantsIO.kI_IntakeArm, ConstantsIO.kD_IntakeArm);
+		armPID.setContinuous(true);
+		armPID.setInputRange(0, 1);
+		armPID.setOutputRange(-1, 1);
+	}
+	
+	public void setSetpoint(double setpoint) {
+		if (!armPID.isEnabled()) {
+			armPID.enable();
+		}
+		armPID.setSetpoint(setpoint);
 		
 	}
 	
 	public void setManual(double pwm) {
-		
+		if (armPID.isEnabled()) {
+			armPID.disable();
+		}
 		if (Math.abs(pwm) <= INTAKE_THRESHOLD) {
 			pwm = 0;
 		} else {

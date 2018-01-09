@@ -10,6 +10,7 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -81,6 +82,7 @@ public class RobotMap {
 		Solenoid lowerSolenoid = new Solenoid(4);
 		
 		shooterEncoder = new Encoder(6, 7);
+		shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		shooterVictorSP = new VictorSP(0);
 		

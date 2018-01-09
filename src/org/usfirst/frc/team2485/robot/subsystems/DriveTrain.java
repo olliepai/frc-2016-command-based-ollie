@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2485.robot.subsystems;
 
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.WarlordsPIDController;
 import org.usfirst.frc.team2485.robot.commands.DriveWithControllers;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -8,6 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 	private static final double THROTTLE_DEADBAND = 0.1;
 	private static final double STEERING_DEADBAND = 0.1;
+	
+	public WarlordsPIDController velocityPID = new WarlordsPIDController();
+	public WarlordsPIDController distancePID = new WarlordsPIDController();
+	
 	
 	public DriveTrain() {
 		RobotMap.leftDriveEncoder.reset();

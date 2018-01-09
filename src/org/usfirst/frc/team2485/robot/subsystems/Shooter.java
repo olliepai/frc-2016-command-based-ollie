@@ -3,10 +3,18 @@ package org.usfirst.frc.team2485.robot.subsystems;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2485.robot.ConstantsIO;
+import org.usfirst.frc.team2485.robot.EncoderWrapperRateAndDistance;
 import org.usfirst.frc.team2485.robot.RobotMap;
+import org.usfirst.frc.team2485.robot.WarlordsPIDController;
+
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
+	public WarlordsPIDController ratePID;
+	
+	
 	public static enum HoodPosition {
 		LOW_ANGLE, HIGH_ANGLE, STOWED
 	};
@@ -17,7 +25,27 @@ public class Shooter extends Subsystem {
 
 	public Shooter() {
 		currHoodPosition = DEFAULT_HOOD_POSITION;
+		
 
+		ratePID = new WarlordsPIDController();
+		ratePID.setSources(RobotMap.shooterEncoder);
+		ratePID.setOutputs(RobotMap.shooterWrapper);
+		ratePID.setOutputRange(0, 1);
+		ratePID.setPID(ConstantsIO.kP_Shooter, ConstantsIO.kI_Shooter, ConstantsIO.kD_Shooter, ConstantsIO.kF_Shooter);
+		
+		disableShooter();
+	}
+	
+	public boolean isPIDEnabled() {
+		return ratePID.isEnabled();
+	}
+	
+	public void setRate() {
+		if (!isPIDEnabled()) {
+			ratePID.enable();
+		}
+		
+		ratePID.setSetpoint(ConstantsIO.kShotRPS);
 	}
 
 	public void setHoodPosition(final HoodPosition newHoodPosition) {
@@ -63,15 +91,15 @@ public class Shooter extends Subsystem {
 	}
 
 	public void setPWM(double pwm) {
-
+		if (isPIDEnabled()) {
+			ratePID.disable();
+		}
+		
 		RobotMap.shooterWrapper.set(pwm);
-
 	}
 
 	public void disableShooter() {
-
-		RobotMap.shooterWrapper.emergencyStop();
-
+		setPWM(0);
 	}
 
 	
